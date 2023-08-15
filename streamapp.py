@@ -12,6 +12,28 @@ with open("C:\\Users\\vedan\\Yale\\College Research Work\\LILY Research\\Data\\t
     cols = df.columns.tolist()
 
 
+data2_new = {}
+
+with open("C:\\Users\\vedan\\Yale\\College Research Work\\LILY Research\\Data\\predictions_step_0_rank_0.jsonl") as f:
+
+    for line in f:
+        data = json.loads(line)
+        for key in data.keys():
+            if key not in data2_new:
+                data2_new[key] = [data[key]]
+            else:
+                data2_new[key].append(data[key])
+            
+    # data2 = json.load(f)
+    # df2 = pd.DataFrame.from_dict(pd.json_normalize(data2), orient='columns')
+    # #df = df[1:]
+    # cols2 = df2.columns.tolist()
+
+
+
+
+
+
 st.title("Few-shot Learning Results")
 
 
@@ -35,6 +57,8 @@ for i in range(1, len(cols)):
 print(data_new)
 
 df = pd.DataFrame(data_new)
+
+df2 = pd.DataFrame(data2_new)
 
 
 
@@ -64,6 +88,7 @@ for i in range(len(checks)):
         df = df.drop(cols[i+2], axis=1)
 
 st.dataframe(df, hide_index=True)
+st.dataframe(df2, hide_index=True)
 #df.drop(cols)
 
 
