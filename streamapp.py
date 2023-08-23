@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from streamlit_tags import st_tags
+from streamlit_tags import st_tags, st_tags_sidebar
 import json
 
 #Load in JSON file
@@ -31,7 +31,11 @@ with open("/Users/chrisd456/Documents/Columbia Work/Summer 2023/Yale_Research/We
     # cols2 = df2.columns.tolist()
 
 
-st.title("Few-shot Learning Results")
+st.set_page_config(
+    page_title="NLP Paper", 
+    layout="wide")
+
+#st.title("Few-shot Learning Results")
 
 orgs = df[cols[0]].tolist()
 
@@ -42,6 +46,10 @@ data_new["tags"]=[]
 #    temp=[]
 #    for j in df[cols[]]
 
+st.code(body="def remove_Occ(str,ch):\n  return str[1:-1]\n",
+        language='python')
+st.code(body="## Given the natural language description and example assertion(s), write a python function.\n\n### Task Start ###\n# These are the assertions for your function:\nassert similar_elements((3, 4, 5, 6),(5, 7, 4, 10)) == (4, 5)\n\n\"\"\" Write a function to find the similar elements from the given two tuple lists. \"\"\"\ndef similar_elements(test_tup1, test_tup2):\n  res = tuple(set(test_tup1) & set(test_tup2))\n  return (res) \n### Task End ###\n\n### Task Start ###\n# These are the assertions for your function:\nassert is_not_prime(2) == False\n\n\"\"\" Write a python function to identify non-prime numbers. \"\"\"\nimport math\ndef is_not_prime(n):\n    result = False\n    for i in range(2,int(math.sqrt(n)) + 1):\n        if n % i == 0:\n            result = True\n    return result\n### Task End ###\n\n### Task Start ###\n# These are the assertions for your function:\nassert heap_queue_largest( [25, 35, 22, 85, 14, 65, 75, 22, 58],3)==[85, 75, 65] \n\n\"\"\" Write a function to find the largest integers from a given list of numbers using heap queue algorithm. \"\"\"\nimport heapq as hq\ndef heap_queue_largest(nums,n):\n  largest_nums = hq.nlargest(n, nums)\n  return largest_nums\n### Task End ###\n\n### Task Start ###\n# These are the assertions for your function:\nassert remove_Occ(\"hello\",\"l\") == \"heo\"\n\n\"\"\" Write a python function to remove first and last occurrence of a given character from the string. \"\"\"",
+        language="python")
 #data_new["tags"]=orgs_tags
 #arrange table 7 by model name, add org as a tag
 for i in range(1, len(cols)):
@@ -73,14 +81,24 @@ data_new["tags"]=tags
 df = pd.DataFrame(data_new)
 df2 = pd.DataFrame(data2_new)
 
-col1, col2, col3= st.columns(3)
+
+bullets="### :red[Organizations:] \n"
+for i in orgs:
+    bullets+=("* " + i + "\n")
+
+st.sidebar.write(bullets)
+
+
+#col1, col2, col3= st.columns(3)
+col2, col3= st.columns(2)
+
 #Select organization tags 
-with col1:
+'''with col1:
 #Show all possible organizations
     bullets="### :red[Organizations:] \n"
     for i in orgs:
         bullets+=("* " + i + "\n")
-    st.write(bullets)
+    st.write(bullets)'''
     
 with col2:
     keywords = st_tags(
