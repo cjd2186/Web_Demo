@@ -83,7 +83,7 @@ def mbpp3(mbpp_df):
         prpt= y[i]["prompt"]
         func_sig= y[i]["func_signature"]
         func_sigs.append(func_sig)
-        functions.append(z)
+        functions.append(z) 
         prpts.append(prpt)
 
     #list of test cases, and if they were passed
